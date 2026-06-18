@@ -6,226 +6,61 @@
 <title>JTBC 아파트 트루벨류 입주민 게시판</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #7a6548; min-height: 100vh; font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif; }
 
-  body {
-    background: #7a6548;
-    min-height: 100vh;
-    font-family: 'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif;
-  }
-
-  .admin-bar {
-    background: #3d2b1a;
-    padding: 8px 16px;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 10px;
-  }
+  .admin-bar { background: #3d2b1a; padding: 8px 16px; display: flex; justify-content: flex-end; align-items: center; gap: 10px; }
   .admin-status { font-size: 11px; color: #c8a96e; }
-  .btn-admin-login {
-    font-size: 11px;
-    color: #c8a96e;
-    background: none;
-    border: 1px solid #c8a96e;
-    padding: 4px 10px;
-    border-radius: 3px;
-    cursor: pointer;
-  }
+  .btn-admin-login { font-size: 11px; color: #c8a96e; background: none; border: 1px solid #c8a96e; padding: 4px 10px; border-radius: 3px; cursor: pointer; }
 
-  .board-header {
-    background: #5c4430;
-    padding: 18px 16px 14px;
-    text-align: center;
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    border-bottom: 2px solid #3d2b1a;
-  }
+  .board-header { background: #5c4430; padding: 18px 16px 14px; text-align: center; position: sticky; top: 0; z-index: 100; border-bottom: 2px solid #3d2b1a; }
   .board-title-main { color: #f5ead8; font-size: 16px; font-weight: 700; letter-spacing: 1px; margin-bottom: 2px; }
   .board-title-sub { color: #c8a96e; font-size: 11px; letter-spacing: 2px; }
 
-  .board-body {
-    padding: 14px 12px 100px;
-    max-width: 480px;
-    margin: 0 auto;
-  }
+  .board-body { padding: 14px 12px 100px; max-width: 480px; margin: 0 auto; }
 
-  .notice-banner {
-    background: #c8a96e;
-    color: #3d2b1a;
-    font-size: 11px;
-    font-weight: 600;
-    padding: 8px 14px;
-    border-radius: 4px;
-    margin-bottom: 12px;
-    text-align: center;
-    letter-spacing: 0.5px;
-  }
+  .notice-banner { background: #c8a96e; color: #3d2b1a; font-size: 11px; font-weight: 600; padding: 8px 14px; border-radius: 4px; margin-bottom: 12px; text-align: center; letter-spacing: 0.5px; }
 
-  /* 상단고정 영역 */
-  .pinned-section { margin-bottom: 4px; }
-
-  .post-card {
-    background: #fffef9;
-    border: 0.5px solid #d4c9a8;
-    border-radius: 3px;
-    padding: 12px 14px;
-    margin-bottom: 8px;
-    position: relative;
-  }
-  .post-card.pinned {
-    border-left: 3px solid #c8a96e;
-    background: #fffdf4;
-  }
-  .pin-badge {
-    display: inline-block;
-    background: #c8a96e;
-    color: #3d2b1a;
-    font-size: 9px;
-    font-weight: 700;
-    padding: 2px 7px;
-    border-radius: 2px;
-    margin-bottom: 6px;
-    letter-spacing: 0.5px;
-  }
-  .post-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 7px;
-  }
+  .post-card { background: #fffef9; border: 0.5px solid #d4c9a8; border-radius: 3px; padding: 12px 14px; margin-bottom: 8px; }
+  .post-card.pinned { border-left: 3px solid #c8a96e; background: #fffdf4; }
+  .pin-badge { display: inline-block; background: #c8a96e; color: #3d2b1a; font-size: 9px; font-weight: 700; padding: 2px 7px; border-radius: 2px; margin-bottom: 6px; letter-spacing: 0.5px; }
+  .post-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 7px; }
   .post-author { font-size: 12px; font-weight: 600; color: #3d2b1a; }
   .post-date { font-size: 10px; color: #9a8a76; }
   .post-content { font-size: 13px; color: #4a3c2d; line-height: 1.65; word-break: break-word; }
 
   .admin-actions { display: none; margin-top: 8px; gap: 6px; flex-wrap: wrap; }
   .admin-mode .admin-actions { display: flex; }
-  .btn-admin {
-    font-size: 10px;
-    padding: 4px 10px;
-    border-radius: 3px;
-    cursor: pointer;
-    border: none;
-    font-weight: 500;
-  }
+  .btn-admin { font-size: 10px; padding: 4px 10px; border-radius: 3px; cursor: pointer; border: none; font-weight: 500; }
   .btn-delete { background: #e8d4c8; color: #5c2e1a; }
   .btn-pin { background: #d4c8a8; color: #3d2b1a; }
   .btn-unpin { background: #c8d4a8; color: #2b3d1a; }
 
-  /* 페이지네이션 */
-  .pagination {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 6px;
-    margin-top: 16px;
-    flex-wrap: wrap;
-  }
-  .page-btn {
-    width: 34px;
-    height: 34px;
-    border-radius: 4px;
-    border: 1px solid #c8b89a;
-    background: #fffef9;
-    color: #5c4430;
-    font-size: 13px;
-    font-weight: 500;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .page-btn.active {
-    background: #5c4430;
-    color: #f5ead8;
-    border-color: #5c4430;
-  }
-  .page-btn.nav {
-    font-size: 16px;
-    color: #8a7a66;
-  }
+  .divider { border: none; border-top: 1px dashed #c8b89a; margin: 4px 0 12px; }
+
+  .pagination { display: flex; justify-content: center; align-items: center; gap: 6px; margin-top: 16px; flex-wrap: wrap; }
+  .page-btn { width: 34px; height: 34px; border-radius: 4px; border: 1px solid #c8b89a; background: #fffef9; color: #5c4430; font-size: 13px; font-weight: 500; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .page-btn.active { background: #5c4430; color: #f5ead8; border-color: #5c4430; }
+  .page-btn.nav { font-size: 16px; color: #8a7a66; }
   .page-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+  .page-info { text-align: center; font-size: 11px; color: #c8b89a; margin-top: 10px; }
 
-  .fab {
-    position: fixed;
-    bottom: 24px;
-    right: 20px;
-    background: #5c4430;
-    color: #f5ead8;
-    font-size: 13px;
-    font-weight: 600;
-    padding: 13px 20px;
-    border-radius: 28px;
-    border: none;
-    cursor: pointer;
-    z-index: 200;
-    letter-spacing: 0.3px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-  }
+  .fab { position: fixed; bottom: 24px; right: 20px; background: #5c4430; color: #f5ead8; font-size: 13px; font-weight: 600; padding: 13px 20px; border-radius: 28px; border: none; cursor: pointer; z-index: 200; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
 
-  .modal-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.6);
-    z-index: 300;
-    align-items: flex-end;
-    justify-content: center;
-  }
+  .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 300; align-items: flex-end; justify-content: center; }
   .modal-overlay.open { display: flex; }
-  .modal-sheet {
-    background: #faf6ee;
-    width: 100%;
-    max-width: 480px;
-    border-radius: 16px 16px 0 0;
-    padding: 20px 20px 40px;
-    animation: slideUp 0.25s ease;
-  }
-  @keyframes slideUp {
-    from { transform: translateY(100%); }
-    to { transform: translateY(0); }
-  }
+  .modal-sheet { background: #faf6ee; width: 100%; max-width: 480px; border-radius: 16px 16px 0 0; padding: 20px 20px 40px; animation: slideUp 0.25s ease; }
+  @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
   .modal-handle { width: 40px; height: 4px; background: #d4c9a8; border-radius: 2px; margin: 0 auto 16px; }
   .modal-title { font-size: 15px; font-weight: 700; color: #3d2b1a; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #e8dfc8; }
   .field-label { font-size: 11px; font-weight: 600; color: #8a7a66; margin-bottom: 5px; letter-spacing: 0.5px; }
-  .field-input {
-    width: 100%;
-    background: #fff;
-    border: 1px solid #d4c9a8;
-    border-radius: 4px;
-    padding: 10px 12px;
-    font-size: 14px;
-    color: #3d2b1a;
-    margin-bottom: 14px;
-    font-family: inherit;
-    outline: none;
-  }
+  .field-input { width: 100%; background: #fff; border: 1px solid #d4c9a8; border-radius: 4px; padding: 10px 12px; font-size: 14px; color: #3d2b1a; margin-bottom: 14px; font-family: inherit; outline: none; }
   .field-input:focus { border-color: #c8a96e; }
   textarea.field-input { height: 100px; resize: none; line-height: 1.6; }
   .char-count { font-size: 10px; color: #9a8a76; text-align: right; margin-top: -10px; margin-bottom: 14px; }
-  .btn-submit {
-    width: 100%;
-    background: #5c4430;
-    color: #f5ead8;
-    font-size: 14px;
-    font-weight: 700;
-    padding: 13px;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-  }
+  .btn-submit { width: 100%; background: #5c4430; color: #f5ead8; font-size: 14px; font-weight: 700; padding: 13px; border-radius: 6px; border: none; cursor: pointer; }
   .btn-submit:disabled { background: #b0a090; cursor: not-allowed; }
 
-  .admin-modal-overlay {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.6);
-    z-index: 400;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-  }
+  .admin-modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 400; align-items: center; justify-content: center; padding: 20px; }
   .admin-modal-overlay.open { display: flex; }
   .admin-modal { background: #faf6ee; border-radius: 10px; padding: 24px 20px; width: 100%; max-width: 300px; }
   .admin-modal h3 { font-size: 14px; font-weight: 700; color: #3d2b1a; margin-bottom: 14px; }
@@ -235,15 +70,13 @@
 
   .empty-state { text-align: center; padding: 40px 20px; color: #c8b89a; font-size: 13px; line-height: 2; }
   .loading { text-align: center; padding: 30px; color: #c8b89a; font-size: 13px; }
-  .divider { border: none; border-top: 1px dashed #c8b89a; margin: 4px 0 12px; }
-  .page-info { text-align: center; font-size: 11px; color: #c8b89a; margin-top: 10px; }
 </style>
 </head>
 <body>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, addDoc, deleteDoc, updateDoc, doc, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, deleteDoc, updateDoc, doc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 // ════════════════════════════════════════════
 // ★★★ 여기에 Firebase 설정값을 붙여넣으세요 ★★★
@@ -262,7 +95,7 @@ const firebaseConfig = {
 // ════════════════════════════════════════════
 const ADMIN_PASSWORD = "jmkt2026apt";
 
-const POSTS_PER_PAGE = 20;
+const POSTS_PER_PAGE = 10;
 const MAX_PINNED = 3;
 
 const app = initializeApp(firebaseConfig);
@@ -271,11 +104,11 @@ const postsRef = collection(db, "posts");
 
 let isAdmin = false;
 let currentNickname = "";
-let allPosts = [];
+let allPosts = [];      // Firestore에서 받은 원본 전체 (수정 금지)
 let currentPage = 1;
 
+// DOM
 const boardBody = document.getElementById("boardBody");
-const fabBtn = document.getElementById("fabBtn");
 const modalOverlay = document.getElementById("modalOverlay");
 const inputNickname = document.getElementById("inputNickname");
 const inputContent = document.getElementById("inputContent");
@@ -286,124 +119,114 @@ const adminLogoutBtn = document.getElementById("adminLogoutBtn");
 const adminStatus = document.getElementById("adminStatus");
 const adminModalOverlay = document.getElementById("adminModalOverlay");
 const adminPasswordInput = document.getElementById("adminPasswordInput");
-const adminConfirmBtn = document.getElementById("adminConfirmBtn");
-const adminCancelBtn = document.getElementById("adminCancelBtn");
 
-function formatDate(timestamp) {
-  if (!timestamp) return "";
-  const d = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
-  const y = d.getFullYear();
-  const m = String(d.getMonth() + 1).padStart(2, "0");
-  const day = String(d.getDate()).padStart(2, "0");
-  const h = String(d.getHours()).padStart(2, "0");
-  const min = String(d.getMinutes()).padStart(2, "0");
-  return `${y}.${m}.${day} ${h}:${min}`;
+function formatDate(ts) {
+  if (!ts) return "";
+  const d = ts.toDate ? ts.toDate() : new Date(ts);
+  return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,"0")}.${String(d.getDate()).padStart(2,"0")} ${String(d.getHours()).padStart(2,"0")}:${String(d.getMinutes()).padStart(2,"0")}`;
 }
 
-function escapeHtml(text) {
-  return String(text)
-    .replace(/&/g,"&amp;")
-    .replace(/</g,"&lt;")
-    .replace(/>/g,"&gt;")
-    .replace(/"/g,"&quot;");
+function esc(t) {
+  return String(t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
 }
 
-function renderPostCard(post) {
-  const isPinned = post.pinned;
-  return `
-    <div class="post-card ${isPinned ? 'pinned' : ''}" data-id="${post.id}">
-      ${isPinned ? '<span class="pin-badge">공지 고정</span>' : ''}
-      <div class="post-meta">
-        <span class="post-author">${escapeHtml(post.author)}</span>
-        <span class="post-date">${formatDate(post.createdAt)}</span>
-      </div>
-      <div class="post-content">${escapeHtml(post.content).replace(/\n/g,'<br>')}</div>
-      <div class="admin-actions">
-        ${isPinned
-          ? `<button class="btn-admin btn-unpin" onclick="window._unpinPost('${post.id}')">고정 해제</button>`
-          : `<button class="btn-admin btn-pin" onclick="window._pinPost('${post.id}')">상단 고정</button>`
-        }
-        <button class="btn-admin btn-delete" onclick="window._deletePost('${post.id}')">삭제</button>
-      </div>
-    </div>`;
+function cardHtml(post) {
+  const pinned = post.pinned === true;
+  return `<div class="post-card${pinned?' pinned':''}" data-id="${post.id}">
+    ${pinned ? '<span class="pin-badge">공지 고정</span>' : ''}
+    <div class="post-meta">
+      <span class="post-author">${esc(post.author)}</span>
+      <span class="post-date">${formatDate(post.createdAt)}</span>
+    </div>
+    <div class="post-content">${esc(post.content).replace(/\n/g,'<br>')}</div>
+    <div class="admin-actions">
+      ${pinned
+        ? `<button class="btn-admin btn-unpin" onclick="window.__unpin('${post.id}')">고정 해제</button>`
+        : `<button class="btn-admin btn-pin"   onclick="window.__pin('${post.id}')">상단 고정</button>`
+      }
+      <button class="btn-admin btn-delete" onclick="window.__del('${post.id}')">삭제</button>
+    </div>
+  </div>`;
 }
 
 function renderPage() {
-  const pinned = allPosts.filter(p => p.pinned);
-  const normal = allPosts.filter(p => !p.pinned).sort((a,b) => (b.createdAt?.seconds||0) - (a.createdAt?.seconds||0));
+  // pinned: true인 것만 따로, 나머지는 최신순
+  const pinned  = allPosts.filter(p => p.pinned === true)
+                          .sort((a,b) => (b.createdAt?.seconds||0) - (a.createdAt?.seconds||0));
+  const normal  = allPosts.filter(p => p.pinned !== true)
+                          .sort((a,b) => (b.createdAt?.seconds||0) - (a.createdAt?.seconds||0));
 
-  const totalNormal = normal.length;
-  const totalPages = Math.max(1, Math.ceil(totalNormal / POSTS_PER_PAGE));
+  const totalPages = Math.max(1, Math.ceil(normal.length / POSTS_PER_PAGE));
   if (currentPage > totalPages) currentPage = totalPages;
 
-  const start = (currentPage - 1) * POSTS_PER_PAGE;
-  const pageNormal = normal.slice(start, start + POSTS_PER_PAGE);
+  const slice = normal.slice((currentPage-1)*POSTS_PER_PAGE, currentPage*POSTS_PER_PAGE);
 
   let html = `<div class="notice-banner">JTBC &lt;아파트&gt; 공식 입주민 커뮤니티</div>`;
 
-  if (pinned.length > 0) {
-    html += `<div class="pinned-section">`;
-    pinned.forEach(p => { html += renderPostCard(p); });
-    html += `</div><hr class="divider">`;
+  if (pinned.length) {
+    pinned.forEach(p => { html += cardHtml(p); });
+    html += `<hr class="divider">`;
   }
 
-  if (pageNormal.length === 0 && pinned.length === 0) {
+  if (!slice.length && !pinned.length) {
     html += `<div class="empty-state">아직 게시물이 없습니다.<br>첫 번째 감상평을 남겨보세요!</div>`;
-  } else if (pageNormal.length === 0) {
-    html += `<div class="empty-state">이 페이지에 게시물이 없습니다.</div>`;
   } else {
-    pageNormal.forEach(p => { html += renderPostCard(p); });
+    slice.forEach(p => { html += cardHtml(p); });
   }
 
   if (totalPages > 1) {
-    html += `<div class="pagination">`;
-    html += `<button class="page-btn nav" onclick="window._goPage(${currentPage-1})" ${currentPage===1?'disabled':''}>&#8249;</button>`;
-    for (let i = 1; i <= totalPages; i++) {
-      html += `<button class="page-btn ${i===currentPage?'active':''}" onclick="window._goPage(${i})">${i}</button>`;
+    html += `<div class="pagination">
+      <button class="page-btn nav" onclick="window.__go(${currentPage-1})" ${currentPage===1?'disabled':''}>&#8249;</button>`;
+    for (let i=1; i<=totalPages; i++) {
+      html += `<button class="page-btn${i===currentPage?' active':''}" onclick="window.__go(${i})">${i}</button>`;
     }
-    html += `<button class="page-btn nav" onclick="window._goPage(${currentPage+1})" ${currentPage===totalPages?'disabled':''}>&#8250;</button>`;
-    html += `</div>`;
-    html += `<div class="page-info">${currentPage} / ${totalPages} 페이지</div>`;
+    html += `<button class="page-btn nav" onclick="window.__go(${currentPage+1})" ${currentPage===totalPages?'disabled':''}>&#8250;</button>
+    </div><div class="page-info">${currentPage} / ${totalPages} 페이지</div>`;
   }
 
   boardBody.innerHTML = html;
   if (isAdmin) document.body.classList.add("admin-mode");
-  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-window._goPage = (page) => {
-  const normal = allPosts.filter(p => !p.pinned);
-  const totalPages = Math.max(1, Math.ceil(normal.length / POSTS_PER_PAGE));
-  if (page < 1 || page > totalPages) return;
-  currentPage = page;
+// 전역 핸들러
+window.__go = (p) => {
+  const normal = allPosts.filter(x => x.pinned !== true);
+  const total = Math.max(1, Math.ceil(normal.length / POSTS_PER_PAGE));
+  if (p < 1 || p > total) return;
+  currentPage = p;
   renderPage();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
-window._deletePost = async (id) => {
-  if (!isAdmin) return;
-  if (!confirm("이 게시물을 삭제하시겠습니까?")) return;
+window.__del = async (id) => {
+  if (!isAdmin || !confirm("삭제하시겠습니까?")) return;
   await deleteDoc(doc(db, "posts", id));
 };
 
-window._pinPost = async (id) => {
+window.__pin = async (id) => {
   if (!isAdmin) return;
-  const pinned = allPosts.filter(p => p.pinned);
-  if (pinned.length >= MAX_PINNED) {
+  const cnt = allPosts.filter(p => p.pinned === true).length;
+  if (cnt >= MAX_PINNED) {
     alert(`상단 고정은 최대 ${MAX_PINNED}개까지 가능합니다.\n기존 고정 게시물을 먼저 해제해주세요.`);
     return;
   }
+  // 로컬 상태 즉시 반영 (낙관적 업데이트) → Firestore 쓰기
+  allPosts = allPosts.map(p => p.id === id ? {...p, pinned: true} : p);
+  renderPage();
   await updateDoc(doc(db, "posts", id), { pinned: true });
 };
 
-window._unpinPost = async (id) => {
+window.__unpin = async (id) => {
   if (!isAdmin) return;
+  allPosts = allPosts.map(p => p.id === id ? {...p, pinned: false} : p);
+  renderPage();
   await updateDoc(doc(db, "posts", id), { pinned: false });
 };
 
+// Firestore 실시간 리스닝 — orderBy 없이 받아서 JS에서 정렬
 function listenPosts() {
   boardBody.innerHTML = '<div class="loading">게시판을 불러오는 중...</div>';
-  const q = query(postsRef, orderBy("createdAt", "desc"));
-  onSnapshot(q, (snapshot) => {
+  onSnapshot(postsRef, (snapshot) => {
     allPosts = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
     renderPage();
   }, () => {
@@ -411,41 +234,34 @@ function listenPosts() {
   });
 }
 
+// 게시물 등록
 submitBtn.addEventListener("click", async () => {
   const nickname = inputNickname.value.trim();
-  const content = inputContent.value.trim();
+  const content  = inputContent.value.trim();
   if (!nickname) { alert("닉네임을 입력해주세요."); inputNickname.focus(); return; }
-  if (!content) { alert("내용을 입력해주세요."); inputContent.focus(); return; }
+  if (!content)  { alert("내용을 입력해주세요."); inputContent.focus(); return; }
   if (content.length > 500) { alert("500자 이내로 작성해주세요."); return; }
-
   submitBtn.disabled = true;
   submitBtn.textContent = "등록 중...";
   try {
-    await addDoc(postsRef, {
-      author: nickname,
-      content: content,
-      createdAt: serverTimestamp(),
-      pinned: false
-    });
+    await addDoc(postsRef, { author: nickname, content, createdAt: serverTimestamp(), pinned: false });
     currentNickname = nickname;
     inputContent.value = "";
     charCount.textContent = "0 / 500";
     currentPage = 1;
     closeModal();
-  } catch(e) {
-    alert("등록에 실패했습니다. 잠시 후 다시 시도해주세요.");
-  }
+  } catch { alert("등록에 실패했습니다. 잠시 후 다시 시도해주세요."); }
   submitBtn.disabled = false;
   submitBtn.textContent = "등록하기";
 });
 
+// 관리자 로그인
 adminLoginBtn.addEventListener("click", () => {
   adminPasswordInput.value = "";
   adminModalOverlay.classList.add("open");
   setTimeout(() => adminPasswordInput.focus(), 100);
 });
-
-adminConfirmBtn.addEventListener("click", () => {
+document.getElementById("adminConfirmBtn").addEventListener("click", () => {
   if (adminPasswordInput.value === ADMIN_PASSWORD) {
     isAdmin = true;
     document.body.classList.add("admin-mode");
@@ -460,10 +276,8 @@ adminConfirmBtn.addEventListener("click", () => {
     adminPasswordInput.focus();
   }
 });
-
-adminCancelBtn.addEventListener("click", () => { adminModalOverlay.classList.remove("open"); });
-adminPasswordInput.addEventListener("keydown", (e) => { if (e.key === "Enter") adminConfirmBtn.click(); });
-
+document.getElementById("adminCancelBtn").addEventListener("click", () => adminModalOverlay.classList.remove("open"));
+adminPasswordInput.addEventListener("keydown", e => { if (e.key==="Enter") document.getElementById("adminConfirmBtn").click(); });
 adminLogoutBtn.addEventListener("click", () => {
   isAdmin = false;
   document.body.classList.remove("admin-mode");
@@ -473,14 +287,14 @@ adminLogoutBtn.addEventListener("click", () => {
   renderPage();
 });
 
-fabBtn.addEventListener("click", () => {
+// 작성 모달
+document.getElementById("fabBtn").addEventListener("click", () => {
   if (currentNickname) inputNickname.value = currentNickname;
   modalOverlay.classList.add("open");
   setTimeout(() => inputNickname.focus(), 300);
 });
-
 function closeModal() { modalOverlay.classList.remove("open"); }
-modalOverlay.addEventListener("click", (e) => { if (e.target === modalOverlay) closeModal(); });
+modalOverlay.addEventListener("click", e => { if (e.target===modalOverlay) closeModal(); });
 document.getElementById("closeModal").addEventListener("click", closeModal);
 inputContent.addEventListener("input", () => { charCount.textContent = `${inputContent.value.length} / 500`; });
 
@@ -514,7 +328,7 @@ listenPosts();
     <textarea class="field-input" id="inputContent" placeholder="감상평을 자유롭게 남겨주세요 :)" maxlength="500"></textarea>
     <div class="char-count" id="charCount">0 / 500</div>
     <button class="btn-submit" id="submitBtn">등록하기</button>
-    <button id="closeModal" style="width:100%; background:none; border:none; padding:12px; color:#9a8a76; font-size:13px; cursor:pointer; margin-top:6px;">닫기</button>
+    <button id="closeModal" style="width:100%;background:none;border:none;padding:12px;color:#9a8a76;font-size:13px;cursor:pointer;margin-top:6px;">닫기</button>
   </div>
 </div>
 
