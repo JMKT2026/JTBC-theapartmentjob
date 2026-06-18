@@ -95,6 +95,7 @@ const firebaseConfig = {
 // ════════════════════════════════════════════
 const ADMIN_PASSWORD = "jmkt2026apt";
 
+
 const POSTS_PER_PAGE = 10;
 const MAX_PINNED = 3;
 
@@ -177,8 +178,21 @@ function renderPage() {
   if (totalPages > 1) {
     html += `<div class="pagination">
       <button class="page-btn nav" onclick="window.__go(${currentPage-1})" ${currentPage===1?'disabled':''}>&#8249;</button>`;
-    for (let i=1; i<=totalPages; i++) {
+    const WING = 2;
+    let start = Math.max(1, currentPage - WING);
+    let end   = Math.min(totalPages, currentPage + WING);
+    if (currentPage - WING < 1) end   = Math.min(totalPages, end + (WING - currentPage + 1));
+    if (currentPage + WING > totalPages) start = Math.max(1, start - (currentPage + WING - totalPages));
+    if (start > 1) {
+      html += `<button class="page-btn" onclick="window.__go(1)">1</button>`;
+      if (start > 2) html += `<span style="color:#9a8a76;font-size:13px;padding:0 2px;">…</span>`;
+    }
+    for (let i=start; i<=end; i++) {
       html += `<button class="page-btn${i===currentPage?' active':''}" onclick="window.__go(${i})">${i}</button>`;
+    }
+    if (end < totalPages) {
+      if (end < totalPages - 1) html += `<span style="color:#9a8a76;font-size:13px;padding:0 2px;">…</span>`;
+      html += `<button class="page-btn" onclick="window.__go(${totalPages})">${totalPages}</button>`;
     }
     html += `<button class="page-btn nav" onclick="window.__go(${currentPage+1})" ${currentPage===totalPages?'disabled':''}>&#8250;</button>
     </div><div class="page-info">${currentPage} / ${totalPages} 페이지</div>`;
